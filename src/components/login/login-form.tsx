@@ -1,4 +1,5 @@
 import { Card, Input, VStack } from "@chakra-ui/react";
+import styles from "@utils/styles";
 import { LuLock, LuUser } from "react-icons/lu";
 import { Button } from "../ui/button";
 import { Field } from "../ui/field";
@@ -9,6 +10,7 @@ function LoginForm() {
   return (
     <Card.Root
       borderWidth={{ base: 0, sm: 1 }}
+      className={styles.animate.onload}
       maxW={{ base: "100%", sm: "sm" }}
     >
       <Card.Header>

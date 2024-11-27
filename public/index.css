@@ -7,13 +7,13 @@ body .tippy-container .tippy-content {
 
 /* Tag Animation Style Start */
 body .animate-onload,
-body .animate-onload[data-speed="fast"] {
+body .animate-onload-fast {
   animation-name: onTagLoad;
   animation-duration: 500ms;
   animation-fill-mode: forwards;
 }
 
-body .animate-onload[data-speed="fast"] {
+body .animate-onload-fast {
   animation-duration: 300ms;
 }
 

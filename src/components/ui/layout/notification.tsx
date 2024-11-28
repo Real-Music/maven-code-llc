@@ -1,18 +1,3 @@
-import { Avatar } from "@/components/ui/avatar";
-import {
-  MenuContent,
-  MenuItem,
-  MenuItemCommand,
-  MenuRoot,
-  MenuTrigger,
-} from "@/components/ui/menu";
-import {
-  PopoverArrow,
-  PopoverContent,
-  PopoverRoot,
-  PopoverTitle,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import notificationData from "@/data/notification-data";
 import {
   Box,
@@ -26,9 +11,25 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { Avatar } from "@components/ui/avatar";
+import {
+  MenuContent,
+  MenuItem,
+  MenuItemCommand,
+  MenuRoot,
+  MenuTrigger,
+} from "@components/ui/menu";
+import {
+  PopoverArrow,
+  PopoverContent,
+  PopoverRoot,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@components/ui/popover";
 import { FaCircle } from "react-icons/fa";
 import { FaEllipsis } from "react-icons/fa6";
 import { LuBell } from "react-icons/lu";
+import { Fragment } from "react/jsx-runtime";
 
 function Notification() {
   const { menu, tabs } = notificationData;
@@ -91,7 +92,7 @@ function Notification() {
           <Tabs.List w="100%" bg="bg.muted" rounded="l3" p="1">
             <For each={tabs.triggers}>
               {({ title, Icon }) => (
-                <Tabs.Trigger flex={1} value={title.toLowerCase()}>
+                <Tabs.Trigger key={title} flex={1} value={title.toLowerCase()}>
                   <Icon />
                   <Text>{title}</Text>
                 </Tabs.Trigger>
@@ -102,11 +103,11 @@ function Notification() {
 
           <For each={tabs.contents}>
             {({ value, body }) => (
-              <Tabs.Content value={value.toLowerCase()}>
+              <Tabs.Content key={value} value={value.toLowerCase()}>
                 <Flex gap={3} flexDir="column" cursor="pointer">
                   <For each={body}>
                     {({ name, img, text }) => (
-                      <>
+                      <Fragment key={name}>
                         <Flex alignItems="center" gap={4}>
                           <Avatar name={name} src={img} />
                           <VStack gap={0} alignItems="start">
@@ -119,7 +120,7 @@ function Notification() {
                           </VStack>
                         </Flex>
                         <Separator />
-                      </>
+                      </Fragment>
                     )}
                   </For>
                 </Flex>

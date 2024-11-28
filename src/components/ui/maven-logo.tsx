@@ -1,12 +1,21 @@
 import logo from "@/assets/logo-without-text.png";
 import styles from "@/utils/styles";
-import { HStack, Heading, Image } from "@chakra-ui/react";
+import { HStack, Heading, HeadingProps, Image } from "@chakra-ui/react";
 
-function Logo() {
+interface Props {
+  headingProps?: HeadingProps;
+}
+
+function Logo({ headingProps }: Props) {
   return (
     <HStack className={styles.animate.onloadFast} justifyContent="center">
       <Image src={logo} w={45} alt="MavenCode Logo" />
-      <Heading fontWeight={900} fontFamily="body" fontSize="2xl">
+      <Heading
+        fontSize="2xl"
+        fontWeight={900}
+        fontFamily="body"
+        {...headingProps}
+      >
         MAVENCODE
       </Heading>
     </HStack>

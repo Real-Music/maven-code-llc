@@ -2,6 +2,7 @@ import notificationData from "@/data/notification-data";
 import {
   Box,
   Circle,
+  defineStyle,
   Flex,
   For,
   Heading,
@@ -30,6 +31,13 @@ import { FaCircle } from "react-icons/fa";
 import { FaEllipsis } from "react-icons/fa6";
 import { LuBell } from "react-icons/lu";
 import { Fragment } from "react/jsx-runtime";
+
+const ringCss = defineStyle({
+  outlineWidth: "2px",
+  outlineColor: "colorPalette.500",
+  outlineOffset: "2px",
+  outlineStyle: "solid",
+});
 
 function Notification() {
   const { menu, tabs } = notificationData;
@@ -102,14 +110,19 @@ function Notification() {
           </Tabs.List>
 
           <For each={tabs.contents}>
-            {({ value, body }) => (
+            {({ value, body }, index) => (
               <Tabs.Content key={value} value={value.toLowerCase()}>
                 <Flex gap={3} flexDir="column" cursor="pointer">
                   <For each={body}>
                     {({ name, img, text }) => (
                       <Fragment key={name}>
                         <Flex alignItems="center" gap={4}>
-                          <Avatar name={name} src={img} />
+                          <Avatar
+                            src={img}
+                            name={name}
+                            colorPalette="primary"
+                            css={index === 1 ? ringCss : {}}
+                          />
                           <VStack gap={0} alignItems="start">
                             <Heading lineHeight={1} fontSize="16px">
                               {name}

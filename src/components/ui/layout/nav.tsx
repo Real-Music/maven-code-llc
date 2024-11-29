@@ -7,7 +7,7 @@ import UserProfile from "./user-profile";
 function Nav() {
   return (
     <Flex
-      p={3}
+      p={4}
       gap={4}
       as="nav"
       borderBottomWidth={1}

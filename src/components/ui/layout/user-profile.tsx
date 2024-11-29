@@ -36,7 +36,7 @@ function UserProfile() {
     <MenuRoot>
       <MenuTrigger asChild>
         <HStack cursor="pointer" justifyContent="center">
-          <Avatar name={userMenu.name} src={userMenu.img} />
+          <Avatar size="sm" name={userMenu.name} src={userMenu.img} />
           <VStack mt={2} gap={0} display={{ base: "none", sm: "flex" }}>
             <Heading
               fontSize="16px"

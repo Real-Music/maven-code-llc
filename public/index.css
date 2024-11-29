@@ -1,3 +1,9 @@
+/* Apex chart Style Start */
+.apexcharts-toolbar {
+  display: none !important;
+}
+/* Apex chart Style End */
+
 /* Tippy Style Start */
 body .tippy-container .tippy-content {
   margin: 0;

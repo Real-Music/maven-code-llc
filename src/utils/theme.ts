@@ -4,6 +4,7 @@ const config = defineConfig({
 	globalCss: {
 		"html, body": { fontFamily: 'body' }
 	},
+	
 	theme: {
 		tokens: {
 			fonts: {

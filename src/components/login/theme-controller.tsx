@@ -1,7 +1,6 @@
-import { HStack, IconButton, Text } from "@chakra-ui/react";
-import { LuLanguages } from "react-icons/lu";
-import ThemeSwitcher from "../ui/theme-switcher";
 import styles from "@/utils/styles";
+import { HStack, Text } from "@chakra-ui/react";
+import ThemeSwitcher from "../ui/theme-switcher";
 
 function ThemeController() {
   return (
@@ -14,9 +13,6 @@ function ThemeController() {
     >
       <Text fontSize="sm">Theme:</Text>
       <ThemeSwitcher size="sm" />
-      <IconButton size="xs" variant="plain" colorPalette="primary">
-        <LuLanguages />
-      </IconButton>
     </HStack>
   );
 }

@@ -38,6 +38,9 @@ const config = defineConfig({
 					900: { value: "#023945" }
 				},
 			},
+			breakpoints: {
+				dashboard: { value: '1100px' }
+			}
 		},
 		semanticTokens: {
 			colors: {

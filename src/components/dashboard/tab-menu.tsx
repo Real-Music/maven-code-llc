@@ -1,21 +1,16 @@
+import dashboardData from "@/data/dashboard-data";
 import styles from "@/utils/styles";
 import { Box, Container, For, Tabs, Text } from "@chakra-ui/react";
-import { IconType } from "react-icons";
 import { useColorMode } from "../ui/color-mode";
 
-interface Props {
-  page: string;
-  pages: { title: string; Icon: IconType }[];
-}
-
-function TabMenu({ pages, page }: Props) {
+function TabMenu({ page }: { page: string }) {
   const { colorMode } = useColorMode();
 
   return (
     <Box bgColor={colorMode === "light" ? "white" : "auto"}>
       <Container p={0}>
         <Tabs.List overflowX="auto" scrollbarWidth="none">
-          <For each={pages}>
+          <For each={dashboardData}>
             {({ title, Icon }) => (
               <Tabs.Trigger
                 key={title}

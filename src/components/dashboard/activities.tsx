@@ -72,7 +72,7 @@ function Activities({ isLoading, data }: Props) {
               yaxis: { show: false },
               stroke: { curve: "smooth" },
               dataLabels: { enabled: false },
-              chart: { toolbar: { show: true } },
+              chart: { toolbar: { show: true }, zoom: { enabled: false } },
               legend: { position: "top", show: true },
               xaxis: {
                 type: "datetime",

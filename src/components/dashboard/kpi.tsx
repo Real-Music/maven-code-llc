@@ -10,15 +10,8 @@ import abbreviateNumber from "@/utils/abbreviateNumber";
 import isEmpty from "@/utils/is-empty";
 import styles from "@/utils/styles";
 import { uuid } from "@/utils/uuid";
-import {
-  Box,
-  Card,
-  Flex,
-  For,
-  SimpleGrid,
-  Skeleton,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Card, Flex, For, SimpleGrid, Skeleton } from "@chakra-ui/react";
+import CountUp from "react-countup";
 import { LuChevronUp } from "react-icons/lu";
 
 type kpi = { title: string; value: number; trend: number; currency?: string };
@@ -47,20 +40,35 @@ function KPIs({ data, isLoading }: Props) {
                   <Flex justifyContent="flex-end">
                     {trend >= 0 ? (
                       <StatUpTrend variant="plain">
-                        <Text>+{trend}%</Text>
+                        <CountUp
+                          prefix="+"
+                          suffix="%"
+                          end={trend}
+                          duration={4}
+                          decimals={0}
+                        />
                         <LuChevronUp />
                       </StatUpTrend>
                     ) : (
                       <StatDownTrend variant="plain">
-                        <Text>{trend}%</Text>
+                        <CountUp
+                          suffix="%"
+                          end={trend}
+                          decimals={0}
+                          duration={4}
+                        />
                         <LuChevronUp />
                       </StatDownTrend>
                     )}
                   </Flex>
                   <Box textAlign="center">
                     <StatValueText>
-                      {currency}
-                      {abbreviateNumber(value)}
+                      <CountUp
+                        end={value}
+                        decimals={0}
+                        prefix={currency}
+                        formattingFn={(value) => abbreviateNumber(value)}
+                      />
                     </StatValueText>
                     <StatLabel>{title}</StatLabel>
                   </Box>

@@ -5,13 +5,16 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 
 import { Provider } from "react-redux";
-import { store } from "./store/configure-store";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor, store } from "./store/configure-store";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ChakraProvider>
       <Provider store={store}>
-        <RouterProvider router={router} />
+        <PersistGate loading={<div>loading...</div>} persistor={persistor}>
+          <RouterProvider router={router} />
+        </PersistGate>
       </Provider>
     </ChakraProvider>
   </StrictMode>

@@ -5,7 +5,9 @@ import {
   StatUpTrend,
   StatValueText,
 } from "@/components/ui/stat";
+import homeData from "@/data/home-data";
 import abbreviateNumber from "@/utils/abbreviateNumber";
+import isEmpty from "@/utils/is-empty";
 import styles from "@/utils/styles";
 import { uuid } from "@/utils/uuid";
 import {
@@ -28,13 +30,16 @@ interface Props {
 function KPIs({ data, isLoading }: Props) {
   const { onload, onloadFast } = styles.animate;
 
+  const loading = isLoading || isEmpty(data);
+  const payload = isEmpty(data) ? homeData.kpi : data;
+
   return (
     <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 6 }} gap={6}>
-      <For each={data}>
+      <For each={payload}>
         {({ title, value, trend, currency }) => (
-          <Skeleton key={title} loading={isLoading}>
+          <Skeleton key={title} loading={loading}>
             <Card.Root
-              key={isLoading ? uuid() : uuid()}
+              key={loading ? uuid() : uuid()}
               className={[onload, onloadFast][Math.floor(Math.random() * 2)]}
             >
               <Card.Body pr={4} pl={4} pt={4}>

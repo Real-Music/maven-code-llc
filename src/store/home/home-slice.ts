@@ -1,14 +1,19 @@
-import homeData from "@/data/home-data";
+import { Activities, GroupTrend, IncomeTrend, KPI } from "@/data/home-data";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface Home {
-	kpi: typeof homeData.kpi,
-	activities: typeof homeData.activities,
-	incomeTrend: typeof homeData.incomeTrend,
-	groupTrend: typeof homeData.groupTrend
+	kpi: KPI[];
+	activities: Activities;
+	incomeTrend: IncomeTrend;
+	groupTrend: GroupTrend;
 }
 
-const initialState: Home = homeData;
+const initialState: Home = {
+	kpi: [],
+	activities: { trend: {}, purchases: [] },
+	incomeTrend: { profit: 0, revenue: 0 },
+	groupTrend: {}
+};
 
 const homeSlice = createSlice({
 	name: "home",
@@ -22,10 +27,10 @@ const homeSlice = createSlice({
 			state.groupTrend = action.payload.groupTrend;
 		},
 		resetData: (state) => {
-			state.kpi = homeData.kpi;
-			state.activities = homeData.activities;
-			state.incomeTrend = homeData.incomeTrend;
-			state.groupTrend = homeData.groupTrend;
+			state.kpi = [];
+			state.groupTrend = {}
+			state.incomeTrend = { profit: 0, revenue: 0 }
+			state.activities = { trend: {}, purchases: [] };
 		}
 	},
 });

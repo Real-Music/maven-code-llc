@@ -1,17 +1,21 @@
 import { Alert } from "@/components/ui/alert";
+import homeData, { GroupTrend, IncomeTrend } from "@/data/home-data";
+import isEmpty from "@/utils/is-empty";
 import styles from "@/utils/styles";
 import { Card, Flex, Heading, Skeleton, VStack } from "@chakra-ui/react";
 import ReactApexChart from "react-apexcharts";
 
-type trend = { [key: string]: number };
-
 interface Props {
   isLoading?: boolean;
-  data: { incomeTrend: trend; groupTrend: trend };
+  data: { incomeTrend: IncomeTrend; groupTrend: GroupTrend };
 }
 
 function Performance({ data, isLoading }: Props) {
+  const { groupTrend, incomeTrend } = homeData;
   const { onload, onloadFast } = styles.animate;
+
+  const loading = isLoading || isEmpty(data.groupTrend);
+  const payload = isEmpty(data.groupTrend) ? { groupTrend, incomeTrend } : data;
 
   return (
     <VStack gap={6}>
@@ -29,7 +33,7 @@ function Performance({ data, isLoading }: Props) {
         flexDir={{ base: "column", md: "row" }}
         minH={{ base: 330 * 2, md: 330, lg: "fit-content" }}
       >
-        <Skeleton loading={isLoading} flex={1}>
+        <Skeleton loading={loading} flex={1}>
           <Card.Root h="100%" className={onload}>
             <Heading
               p="8px 16px"
@@ -44,18 +48,18 @@ function Performance({ data, isLoading }: Props) {
                 type="donut"
                 width="80%"
                 height="80%"
-                series={Object.values(data.incomeTrend)}
+                series={Object.values(payload.incomeTrend)}
                 options={{
                   stroke: { width: 2 },
                   legend: { show: false },
-                  labels: Object.keys(data.incomeTrend),
+                  labels: Object.keys(payload.incomeTrend),
                 }}
               />
             </Flex>
           </Card.Root>
         </Skeleton>
 
-        <Skeleton loading={isLoading} flex={1}>
+        <Skeleton loading={loading} flex={1}>
           <Card.Root h="100%" className={onloadFast}>
             <Heading
               p="8px 16px"
@@ -70,11 +74,11 @@ function Performance({ data, isLoading }: Props) {
                 type="pie"
                 width="80%"
                 height="80%"
-                series={Object.values(data.groupTrend)}
+                series={Object.values(payload.groupTrend)}
                 options={{
                   stroke: { width: 2 },
                   legend: { show: false },
-                  labels: Object.keys(data.groupTrend),
+                  labels: Object.keys(payload.groupTrend),
                 }}
               />
             </Flex>

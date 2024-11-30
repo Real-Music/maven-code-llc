@@ -1,3 +1,10 @@
+export interface KPI { value: number; title: string; trend: number; currency?: string; }
+
+interface Purchase { id: number; user: string; commit: number; date: 'string' }
+export interface Activities { trend: GroupTrend; purchases: Purchase[]; }
+
+export interface IncomeTrend { profit: number; revenue: number }
+export type GroupTrend = { [key: string]: number }
 
 export default {
 	kpi: [

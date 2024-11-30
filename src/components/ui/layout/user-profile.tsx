@@ -1,5 +1,6 @@
 import userMenu from "@/data/user-menu-data";
 import { RootStore } from "@/store/configure-store";
+import { resetData } from "@/store/home/home-slice";
 import { setError } from "@/store/loading/loading-slice";
 import { resetUser } from "@/store/user/user-slice";
 import { Flex, For, Heading, HStack, Text } from "@chakra-ui/react";
@@ -12,19 +13,15 @@ import {
   MenuTrigger,
   MenuTriggerItem,
 } from "@components/ui/menu";
-import { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar } from "../avatar";
 import { useColorMode } from "../color-mode";
-import { resetData } from "@/store/home/home-slice";
 
 type themeType = "system" | "light" | "dark";
 
 function UserProfile() {
-  // TODO: Make a hook for this
   const dispatch = useDispatch();
-  const { setColorMode } = useColorMode();
-  const [theme, setTheme] = useState<themeType>("light");
+  const { setColorMode, theme } = useColorMode();
   const user = useSelector((state: RootStore) => state.user);
 
   const logoutUser = () => {
@@ -32,18 +29,6 @@ function UserProfile() {
     dispatch(resetUser());
     dispatch(resetData());
   };
-
-  useLayoutEffect(() => setColorMode(theme), [theme, setTheme, setColorMode]);
-  useEffect(() => {
-    const changeTheme = () => {
-      if (theme !== "system") return;
-      setColorMode("system");
-    };
-    const matchMedia = window.matchMedia("(prefers-color-scheme: dark)");
-    matchMedia.addEventListener("change", changeTheme);
-    return () => matchMedia.removeEventListener("change", changeTheme);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <MenuRoot>
@@ -92,8 +77,8 @@ function UserProfile() {
                   </MenuTriggerItem>
                   <MenuContent>
                     <MenuRadioItemGroup
-                      value={theme}
-                      onValueChange={(e) => setTheme(e.value as themeType)}
+                      value={theme as themeType}
+                      onValueChange={(e) => setColorMode(e.value as themeType)}
                     >
                       <For each={menu}>
                         {(item) => (

@@ -1,4 +1,6 @@
 import { Avatar } from "@/components/ui/avatar";
+import homeData, { Activities as DataProps } from "@/data/home-data";
+import isEmpty from "@/utils/is-empty";
 import styles from "@/utils/styles";
 import { uuid } from "@/utils/uuid";
 import {
@@ -15,19 +17,18 @@ import {
 import ReactApexChart from "react-apexcharts";
 import { LuTrash } from "react-icons/lu";
 
-type trend = { [key: string]: number };
-type purchases = { id: number; user: string; commit: string; date: string };
-
 interface Props {
+  data: DataProps;
   isLoading?: boolean;
-  data: { trend: trend; purchases: purchases[] };
 }
 
 function Activities({ isLoading, data }: Props) {
   const { onload, onloadFast } = styles.animate;
+  const loading = isLoading || isEmpty(data);
+  const payload = isEmpty(data) ? homeData.activities : data;
 
   return (
-    <Skeleton loading={isLoading}>
+    <Skeleton loading={loading}>
       <Card.Root className={onload}>
         <Heading
           p="8px 16px"
@@ -40,7 +41,7 @@ function Activities({ isLoading, data }: Props) {
 
         <Box
           h={150}
-          key={isLoading ? uuid() : uuid()}
+          key={loading ? uuid() : uuid()}
           className={[onload, onloadFast][Math.floor(Math.random() * 2)]}
         >
           <ReactApexChart
@@ -51,7 +52,7 @@ function Activities({ isLoading, data }: Props) {
               {
                 type: "area",
                 name: "Purchases",
-                data: Object.values(data.trend),
+                data: Object.values(payload.trend),
               },
             ]}
             options={{
@@ -76,7 +77,7 @@ function Activities({ isLoading, data }: Props) {
               xaxis: {
                 type: "datetime",
                 labels: { show: false },
-                categories: Object.keys(data.trend),
+                categories: Object.keys(payload.trend),
               },
             }}
           />
@@ -92,7 +93,7 @@ function Activities({ isLoading, data }: Props) {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            <For each={data.purchases}>
+            <For each={payload.purchases as DataProps["purchases"]}>
               {({ user, id, commit, date }) => (
                 <Table.Row key={id}>
                   <Table.Cell>

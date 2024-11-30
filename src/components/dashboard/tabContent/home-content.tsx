@@ -1,18 +1,18 @@
 import { RootStore } from "@/store/configure-store";
+import { getData } from "@/store/home/home-slice";
 import { Flex, Heading, SimpleGrid, Tabs } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Activities from "../activities";
 import KPIs from "../kpi";
 import Performance from "../performance";
-import { useEffect } from "react";
-import { getData } from "@/store/home/home-slice";
 
 let hasLoaded = false;
 function HomeContent() {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state: RootStore) => state.loading);
-  const homeData = useSelector((state: RootStore) => state.home);
-  const { kpi, activities, incomeTrend, groupTrend } = homeData;
+  const data = useSelector((state: RootStore) => state.home);
+  const { kpi, activities, incomeTrend, groupTrend } = data;
 
   useEffect(() => {
     if (hasLoaded && !isLoading) return;

@@ -6,6 +6,8 @@ import {
   StatValueText,
 } from "@/components/ui/stat";
 import abbreviateNumber from "@/utils/abbreviateNumber";
+import styles from "@/utils/styles";
+import { uuid } from "@/utils/uuid";
 import {
   Box,
   Card,
@@ -24,12 +26,17 @@ interface Props {
 }
 
 function KPIs({ data, isLoading }: Props) {
+  const { onload, onloadFast } = styles.animate;
+
   return (
     <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 6 }} gap={6}>
       <For each={data}>
         {({ title, value, trend, currency }) => (
-          <Skeleton loading={isLoading}>
-            <Card.Root>
+          <Skeleton key={title} loading={isLoading}>
+            <Card.Root
+              key={isLoading ? uuid() : uuid()}
+              className={[onload, onloadFast][Math.floor(Math.random() * 2)]}
+            >
               <Card.Body pr={4} pl={4} pt={4}>
                 <StatRoot textAlign="center">
                   <Flex justifyContent="flex-end">

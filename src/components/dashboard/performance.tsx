@@ -1,4 +1,5 @@
 import { Alert } from "@/components/ui/alert";
+import styles from "@/utils/styles";
 import { Card, Flex, Heading, Skeleton, VStack } from "@chakra-ui/react";
 import ReactApexChart from "react-apexcharts";
 
@@ -10,11 +11,14 @@ interface Props {
 }
 
 function Performance({ data, isLoading }: Props) {
+  const { onload, onloadFast } = styles.animate;
+
   return (
     <VStack gap={6}>
       <Alert
         status="info"
         h="fit-content"
+        className={onload}
         title="Read our documentation with code samples"
       />
 
@@ -26,7 +30,7 @@ function Performance({ data, isLoading }: Props) {
         minH={{ base: 330 * 2, md: 330, lg: "fit-content" }}
       >
         <Skeleton loading={isLoading} flex={1}>
-          <Card.Root h="100%">
+          <Card.Root h="100%" className={onload}>
             <Heading
               p="8px 16px"
               fontWeight={400}
@@ -52,7 +56,7 @@ function Performance({ data, isLoading }: Props) {
         </Skeleton>
 
         <Skeleton loading={isLoading} flex={1}>
-          <Card.Root h="100%">
+          <Card.Root h="100%" className={onloadFast}>
             <Heading
               p="8px 16px"
               fontWeight={400}

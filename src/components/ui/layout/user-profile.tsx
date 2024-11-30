@@ -1,5 +1,8 @@
 import userMenu from "@/data/user-menu-data";
-import { Flex, For, HStack, Text, VStack, Heading } from "@chakra-ui/react";
+import { RootStore } from "@/store/configure-store";
+import { setError } from "@/store/loading/loading-slice";
+import { resetUser } from "@/store/user/user-slice";
+import { Flex, For, Heading, HStack, Text } from "@chakra-ui/react";
 import {
   MenuContent,
   MenuItem,
@@ -10,15 +13,25 @@ import {
   MenuTriggerItem,
 } from "@components/ui/menu";
 import { useEffect, useLayoutEffect, useState } from "react";
-import { useColorMode } from "../color-mode";
+import { useDispatch, useSelector } from "react-redux";
 import { Avatar } from "../avatar";
+import { useColorMode } from "../color-mode";
+import { resetData } from "@/store/home/home-slice";
 
 type themeType = "system" | "light" | "dark";
 
 function UserProfile() {
   // TODO: Make a hook for this
+  const dispatch = useDispatch();
   const { setColorMode } = useColorMode();
   const [theme, setTheme] = useState<themeType>("light");
+  const user = useSelector((state: RootStore) => state.user);
+
+  const logoutUser = () => {
+    dispatch(setError(null));
+    dispatch(resetUser());
+    dispatch(resetData());
+  };
 
   useLayoutEffect(() => setColorMode(theme), [theme, setTheme, setColorMode]);
   useEffect(() => {
@@ -36,27 +49,37 @@ function UserProfile() {
     <MenuRoot>
       <MenuTrigger asChild>
         <HStack cursor="pointer" justifyContent="center">
-          <Avatar size="sm" name={userMenu.name} src={userMenu.img} />
-          <VStack mt={2} gap={0} display={{ base: "none", sm: "flex" }}>
+          <Avatar
+            size="sm"
+            src={user.image || userMenu.img}
+            name={user.fullname || userMenu.name}
+          />
+          <Flex
+            gap={0}
+            mt="7px"
+            flexDir="column"
+            justifyContent="center"
+            display={{ base: "none", sm: "flex" }}
+          >
             <Heading
               fontSize="16px"
               color="fg.muted"
               lineHeight={0.5}
               whiteSpace="nowrap"
             >
-              {userMenu.name}
+              {user.fullname || userMenu.name}
             </Heading>
             <Text fontSize="14px" color="fg.muted">
-              {userMenu.role}
+              {user.role || userMenu.role}
             </Text>
-          </VStack>
+          </Flex>
         </HStack>
       </MenuTrigger>
 
       <MenuContent>
         <For each={userMenu.menu}>
           {({ Icon, title, menu }, index) => {
-            const isLastItem = userMenu.menu.length === index + 1;
+            const isLogout = userMenu.menu.length === index + 1;
             if (menu)
               return (
                 <MenuRoot
@@ -96,7 +119,10 @@ function UserProfile() {
                 key={title}
                 cursor="pointer"
                 value={title.toLowerCase()}
-                color={isLastItem ? "red" : ""}
+                color={isLogout ? "red" : ""}
+                onClick={() => {
+                  if (isLogout) logoutUser();
+                }}
               >
                 <Icon />
                 <Text flex="1">{title}</Text>

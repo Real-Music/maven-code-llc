@@ -1,4 +1,6 @@
 import { Avatar } from "@/components/ui/avatar";
+import styles from "@/utils/styles";
+import { uuid } from "@/utils/uuid";
 import {
   Box,
   Card,
@@ -22,9 +24,11 @@ interface Props {
 }
 
 function Activities({ isLoading, data }: Props) {
+  const { onload, onloadFast } = styles.animate;
+
   return (
     <Skeleton loading={isLoading}>
-      <Card.Root>
+      <Card.Root className={onload}>
         <Heading
           p="8px 16px"
           fontWeight={400}
@@ -34,7 +38,11 @@ function Activities({ isLoading, data }: Props) {
           Development Activity
         </Heading>
 
-        <Box h={150}>
+        <Box
+          h={150}
+          key={isLoading ? uuid() : uuid()}
+          className={[onload, onloadFast][Math.floor(Math.random() * 2)]}
+        >
           <ReactApexChart
             type="area"
             width="100%"

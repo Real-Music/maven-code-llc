@@ -1,18 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface User {
+export interface User {
 	role: string;
 	email: string;
 	username: string;
 	fullname: string;
 	isLoggedIn: boolean;
+	image: string;
 }
 
 
 const initialState: User = {
-	username: '',
 	role: '',
 	email: '',
+	image: '',
+	username: '',
 	fullname: '',
 	isLoggedIn: false,
 };
@@ -29,6 +31,7 @@ const userSlice = createSlice({
 			state.username = action.payload.username;
 			state.fullname = action.payload.fullname;
 			state.isLoggedIn = true;
+			state.image = action.payload.image;
 		},
 		resetUser: (state) => {
 			state.role = "";
@@ -36,6 +39,7 @@ const userSlice = createSlice({
 			state.fullname = "";
 			state.username = "";
 			state.isLoggedIn = false;
+			state.image = "";
 		}
 	}
 });

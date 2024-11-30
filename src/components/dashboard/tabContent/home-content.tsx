@@ -1,16 +1,29 @@
+import { RootStore } from "@/store/configure-store";
 import { Flex, Heading, SimpleGrid, Tabs } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
 import Activities from "../activities";
 import KPIs from "../kpi";
 import Performance from "../performance";
-import homeData from "@/data/home-data";
+import { useEffect } from "react";
+import { getData } from "@/store/home/home-slice";
 
+let hasLoaded = false;
 function HomeContent() {
-  const isLoading = false;
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state: RootStore) => state.loading);
+  const homeData = useSelector((state: RootStore) => state.home);
   const { kpi, activities, incomeTrend, groupTrend } = homeData;
+
+  useEffect(() => {
+    if (hasLoaded && !isLoading) return;
+    dispatch(getData());
+    hasLoaded = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Tabs.Content value="home">
-      <Flex gap={6} overflow="auto" flexDir="column">
+      <Flex gap={6} flexDir="column">
         <Heading fontSize="2xl" color="fg.muted">
           Dashboard
         </Heading>

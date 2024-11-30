@@ -7,13 +7,11 @@ import { toaster } from "@/components/ui/toaster";
 function* loginUser(action: ReturnType<typeof actions.loginUser>) {
 	yield put(setIsLoading(true));
 	try {
-		const user: ReturnType<typeof auth.login> = yield call(auth.login, action.payload);
+		const user: actions.User = yield call(auth.login, action.payload);
 		yield put(actions.setUser(user));
 	} catch (error) {
 		toaster.create({ title: error as string, type: 'error' })
 		yield put(setError(error))
-	} finally {
-		yield put(setIsLoading(false));
 	}
 }
 

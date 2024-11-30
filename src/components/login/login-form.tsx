@@ -1,6 +1,6 @@
 "use client";
 import { RootStore } from "@/store/configure-store";
-import { loginUser } from "@/store/user-slice/user-slice";
+import { loginUser } from "@/store/user/user-slice";
 import { Card, Input, VStack } from "@chakra-ui/react";
 import styles from "@utils/styles";
 import { useState } from "react";

@@ -1,9 +1,9 @@
 import userData from "@/data/user-data";
+import delay from "@/utils/delay";
 
 interface LoginProps { username: string; password: string };
 
 const db = { user: userData }
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export default {
 	login: async ({ username, password }: LoginProps) => {
